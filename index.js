@@ -9,6 +9,7 @@ module.exports = function(root) {
   fs.readdir(root, function (err, files) {
     // TODO: emit err
     files.forEach(function (file) {
+      // TODO: option for only emitting files
       s.emit('data', path.join(root, file));
       // TODO: recurse dirs
     });
