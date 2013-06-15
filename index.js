@@ -13,9 +13,8 @@ module.exports = function(root) {
       s.emit('data', path.join(root, file));
       // TODO: recurse dirs
     });
+    s.emit('end');
   });
-
-  s.emit('end');
 
   return s;
 }
