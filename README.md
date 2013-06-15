@@ -3,6 +3,8 @@ recurse
 
 Takes a root dir and recursively streams paths.
 
+[![build status](https://secure.travis-ci.org/uggedal/recurse.png)](http://travis-ci.org/uggedal/recurse)
+
 Example
 -------
 
