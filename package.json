@@ -14,7 +14,7 @@
     "recursive",
     "path",
     "dir",
-    "stream",
+    "stream"
   ],
   "author": "Eivind Uggedal <eivind@uggedal.com> (http://uggedal.com/)",
   "license": "BSD",
