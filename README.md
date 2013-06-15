@@ -7,7 +7,7 @@ Example
 -------
 
 ````javascript
-var recurse = require('./');
+var recurse = require('recurse');
 
 recurse('.').pipe(process.stdout);
 ````
