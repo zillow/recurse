@@ -1,0 +1,25 @@
+{
+  "name": "recurse",
+  "version": "0.0.0",
+  "description": "Takes a root dir and recursively streams paths",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/uggedal/recurse.git"
+  },
+  "keywords": [
+    "recursive",
+    "path",
+    "dir",
+    "stream",
+  ],
+  "author": "Eivind Uggedal <eivind@uggedal.com> (http://uggedal.com/)",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/uggedal/recurse/issues"
+  }
+}
