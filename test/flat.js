@@ -6,8 +6,8 @@ var rimraf = require('rimraf');
 
 test('flat dir', function (t) {
   mkdirp.sync('flat');
-  fs.openSync('flat/1.txt', 'w')
-  fs.openSync('flat/2.txt', 'w')
+  fs.openSync('flat/1.txt', 'w');
+  fs.openSync('flat/2.txt', 'w');
 
   t.plan(2);
 
