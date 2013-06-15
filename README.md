@@ -22,3 +22,8 @@ var recurse = require('recurse');
 ### var s = recurse(dir)
 
 Return a redable stream of all paths beneath a directory.
+
+License
+-------
+
+BSD
