@@ -25,33 +25,21 @@ module.exports = function(root) {
   var queue = [root];
 
   function next() {
-    if (queue.length) {
-      recurse(queue.pop());
-    } else {
-      s.emit('end');
-    }
+    if (queue.length) return recurse(queue.pop());
+
+    s.emit('end');
   }
 
   function recurse(dir) {
     fs.readdir(dir, function (err, names) {
       // TODO: handle err
       statdir(dir, names, function(entries) {
-        var files = entries.filter(function(entry) {
-          return !entry.isDir;
-        }).map(function(file) {
-          return file.name;
-        });
-        var subdirs = entries.filter(function(entry) {
-          return entry.isDir;
-        }).map(function(subdir) {
-          return subdir.name;
+        entries.forEach(function(entry) {
+          if (entry.isDir) return queue.push(entry.name);
+
+          s.emit('data', entry.name);
         });
 
-        files.forEach(function(file) {
-          s.emit('data', file);
-        });
-
-        if (subdirs.length) queue.push.apply(queue, subdirs);
         next();
       });
     });
