@@ -11,7 +11,7 @@ function statdir(dir, names, cb) {
     var relName = path.join(dir, name);
 
     fs.lstat(relName, function (err, stats) {
-      // TODO: handle err
+      if (err) s.emit('error', err);
       entries.push({name: relName, isDir: stats && stats.isDirectory()});
       if (entries.length == names.length) cb(entries);
     });
@@ -32,7 +32,11 @@ module.exports = function (root) {
 
   function recurse(dir) {
     fs.readdir(dir, function (err, names) {
-      // TODO: handle err
+      if (err) {
+        s.emit('error', err);
+        return next();
+      }
+
       statdir(dir, names, function (entries) {
         entries.forEach(function (entry) {
           if (entry.isDir) return queue.push(entry.name);
