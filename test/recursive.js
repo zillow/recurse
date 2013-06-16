@@ -1,9 +1,9 @@
 var recurse = require('../');
 var test = require('tap').test;
 var fs = require('fs');
+var Stream = require('stream');
 var mkdirp = require('mkdirp');
 var rimraf = require('rimraf');
-var concat = require('concat-stream');
 
 test('recursive dirs', function (t) {
   var files = [
@@ -26,10 +26,16 @@ test('recursive dirs', function (t) {
 
   var recursive = recurse('recursive');
 
-  var all = concat(function(data) {
-    t.equal(data, files.join(''));
+  var all = [];
+  var concat = new Stream;
+  concat.writable = true;
+  concat.write = function(data) {
+    all.push(data);
+  }
+  concat.end = function() {
+    t.equal(all.sort(), files.sort());
     rimraf.sync('recursive');
-  });
+  }
 
-  recursive.pipe(all);
+  recursive.pipe(concat);
 });
