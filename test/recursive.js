@@ -12,11 +12,13 @@ test('recursive dirs', function (t) {
     'recursive/sub/3.txt',
     'recursive/sub/subsub/4.txt',
     'recursive/sub/subsub/subsubsub/5.txt',
-    'recursive/sub/subsub/subsubsub/6.txt'
+    'recursive/sub/subsub/subsubsub/6.txt',
+    'recursive/sub2/7.txt'
   ];
 
   mkdirp.sync('recursive/sub/subsub/subsubsub');
   mkdirp.sync('recursive/sub/subsub/empty');
+  mkdirp.sync('recursive/sub2');
 
   files.forEach(function(f) {
     fs.openSync(f, 'w');
