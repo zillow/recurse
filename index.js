@@ -31,7 +31,7 @@ module.exports = function(root) {
         var files = entries.filter(function(entry) {
           return !entry.isDir;
         });
-        var dirs = entries.filter(function(entry) {
+        var subdirs = entries.filter(function(entry) {
           return entry.isDir;
         });
 
@@ -39,11 +39,11 @@ module.exports = function(root) {
           s.emit('data', entry.name);
         });
 
-        if (!dirs.length) done();
+        if (!subdirs.length) done();
 
-        dirs.forEach(function(entry, i) {
-          recurse(entry.name, function() {
-            if (i == dirs.length - 1) done();
+        subdirs.forEach(function(subdir, i) {
+          recurse(subdir.name, function() {
+            if (i == subdirs.length - 1) done();
           });
         });
       });
