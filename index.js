@@ -7,10 +7,10 @@ function statdir(dir, names, cb) {
 
   if (!names.length) return cb(entries);
 
-  names.forEach(function(name) {
+  names.forEach(function (name) {
     var relName = path.join(dir, name);
 
-    fs.lstat(relName, function(err, stats) {
+    fs.lstat(relName, function (err, stats) {
       // TODO: handle err
       entries.push({name: relName, isDir: stats && stats.isDirectory()});
       if (entries.length == names.length) cb(entries);
@@ -18,7 +18,7 @@ function statdir(dir, names, cb) {
   });
 }
 
-module.exports = function(root) {
+module.exports = function (root) {
   var s = new Stream;
   s.readable = true
 
@@ -33,8 +33,8 @@ module.exports = function(root) {
   function recurse(dir) {
     fs.readdir(dir, function (err, names) {
       // TODO: handle err
-      statdir(dir, names, function(entries) {
-        entries.forEach(function(entry) {
+      statdir(dir, names, function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isDir) return queue.push(entry.name);
 
           s.emit('data', entry.name);
