@@ -22,10 +22,6 @@ module.exports = function(root) {
   function recurse(dir, done) {
     fs.readdir(dir, function (err, names) {
       // TODO: emit err
-      if (!names) {
-        done();
-        return;
-      }
 
       statdir(dir, names, function(entries) {
         var files = entries.filter(function(entry) {
