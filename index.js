@@ -49,7 +49,6 @@ module.exports = function (root) {
     s.emit('end');
   }
 
-
   next();
 
   return s;
