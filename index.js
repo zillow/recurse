@@ -6,6 +6,17 @@ module.exports = function (root) {
   var s = new Stream;
   s.readable = true
 
+  var paused = false;
+
+  s.pause = function () {
+    paused = true;
+  }
+
+  s.resume = function () {
+    paused = false;
+    next();
+  }
+
   var queue = [root];
 
   function recurse(dir) {
@@ -44,6 +55,7 @@ module.exports = function (root) {
   }
 
   function next() {
+    if (paused) return;
     if (queue.length) return recurse(queue.pop());
 
     s.emit('end');
