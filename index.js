@@ -18,20 +18,30 @@ module.exports = function (root) {
   }
 
   var queue = [root];
+  var pending = 0;
 
   function recurse(dir) {
+    pending++;
     fs.readdir(dir, function (err, names) {
+      pending--;
       if (err) {
         s.emit('error', err);
         return next();
       }
 
-      statdir(dir, names, function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isDir) return queue.push(entry.name);
+      if (!names.length) return next();
 
+      var stats = 0;
+      pending += names.length;
+
+      statdir(dir, names, function (entry) {
+        stats++;
+        pending--;
+        if (entry.isDir) {
+          queue.push(entry.name);
+        } else {
           s.emit('data', entry.name);
-        });
+        }
 
         next();
       });
@@ -39,17 +49,12 @@ module.exports = function (root) {
   }
 
   function statdir(dir, names, cb) {
-    var entries = [];
-
-    if (!names.length) return cb(entries);
-
     names.forEach(function (name) {
       var relName = path.join(dir, name);
 
       fs.lstat(relName, function (err, stats) {
         if (err) s.emit('error', err);
-        entries.push({name: relName, isDir: stats && stats.isDirectory()});
-        if (entries.length == names.length) cb(entries);
+        cb({name: relName, isDir: stats && stats.isDirectory()});
       });
     });
   }
@@ -57,6 +62,7 @@ module.exports = function (root) {
   function next() {
     if (paused) return;
     if (queue.length) return recurse(queue.pop());
+    if (pending) return;
 
     s.emit('end');
   }
