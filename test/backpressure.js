@@ -22,7 +22,7 @@ test('backpressure', function (t) {
 
   var backpressure = recurse('backpressure');
   backpressure.on('data', function(data) {
-    t.ok(data.match(/backpressure\/\d\/\d\.txt/));
+    t.ok(data.match(/backpressure\/\d\/\d\.txt/), 'data should match path');
     throttle();
   });
   backpressure.on('end', function(data) {
