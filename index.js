@@ -20,6 +20,7 @@ module.exports = function (root) {
   var queue = [root];
   var pendingReaddirs = {};
   var pendingLstats = {};
+  var buffer = [];
 
   function recurse(dir) {
     pendingReaddirs[dir] = true;
@@ -41,7 +42,11 @@ module.exports = function (root) {
         if (entry.isDir) {
           queue.push(entry.name);
         } else {
-          s.emit('data', entry.name);
+          if (paused) {
+            buffer.push(entry.name);
+          } else {
+            s.emit('data', entry.name);
+          }
         }
 
         next();
@@ -62,6 +67,12 @@ module.exports = function (root) {
 
   function next() {
     if (paused) return;
+
+    if (buffer.length) {
+      s.emit('data', buffer.pop());
+      return next();
+    }
+
     if (queue.length) return recurse(queue.pop());
     if (Object.keys(pendingReaddirs).length) return;
     if (Object.keys(pendingLstats).length) return;
