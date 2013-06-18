@@ -33,8 +33,8 @@ after a couple of runs on my home directory:
 
 ````sh
 $ ./benchmark.js 
-find 184975 1.274s
-recurse 184974 18.023s
+find 185022 1.392s
+recurse 185022 12.582
 ````
 
 License
