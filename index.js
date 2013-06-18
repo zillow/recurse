@@ -26,38 +26,37 @@ module.exports = function (root) {
     pendingReaddirs++;
     fs.readdir(dir, function (err, names) {
       pendingReaddirs--;
+
       if (err) {
         s.emit('error', err);
         return next();
       }
 
-      if (!names.length) return next();
-
-      pendingLstats += names.length;
-
-      statdir(dir, names, function (entry) {
-        pendingLstats--;
-
-        if (entry.isDir) {
-          queue.push(entry.name);
-        } else if (paused) {
-          buffer.push(entry.name);
-        } else {
-          s.emit('data', entry.name);
-        }
-
-        next();
-      });
+      statdir(dir, names);
     });
   }
 
-  function statdir(dir, names, cb) {
+  function statdir(dir, names) {
+    if (!names.length) return next();
+
+    pendingLstats += names.length;
     names.forEach(function (name) {
       var relName = path.join(dir, name);
 
       fs.lstat(relName, function (err, stats) {
+        pendingLstats--;
+
         if (err) s.emit('error', err);
-        cb({name: relName, isDir: stats && stats.isDirectory()});
+
+        if (stats.isDirectory()) {
+          queue.push(relName);
+        } else if (paused) {
+          buffer.push(relName);
+        } else {
+          s.emit('data', relName);
+        }
+
+        next();
       });
     });
   }
