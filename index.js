@@ -18,14 +18,14 @@ module.exports = function (root) {
   }
 
   var queue = [root];
-  var pendingReaddirs = {};
-  var pendingLstats = {};
+  var pendingReaddirs = 0;
+  var pendingLstats = 0;
   var buffer = [];
 
   function recurse(dir) {
-    pendingReaddirs[dir] = true;
+    pendingReaddirs++;
     fs.readdir(dir, function (err, names) {
-      delete pendingReaddirs[dir];
+      pendingReaddirs--;
       if (err) {
         s.emit('error', err);
         return next();
@@ -33,11 +33,10 @@ module.exports = function (root) {
 
       if (!names.length) return next();
 
-      pendingLstats[dir] = names.length;
+      pendingLstats += names.length;
 
       statdir(dir, names, function (entry) {
-        pendingLstats[dir]--;
-        if (!pendingLstats[dir]) delete pendingLstats[dir];
+        pendingLstats--;
 
         if (entry.isDir) {
           queue.push(entry.name);
@@ -74,8 +73,7 @@ module.exports = function (root) {
     }
 
     if (queue.length) return recurse(queue.pop());
-    if (Object.keys(pendingReaddirs).length) return;
-    if (Object.keys(pendingLstats).length) return;
+    if (pendingReaddirs || pendingLstats) return;
 
     s.emit('end');
   }
