@@ -40,12 +40,10 @@ module.exports = function (root) {
 
         if (entry.isDir) {
           queue.push(entry.name);
+        } else if (paused) {
+          buffer.push(entry.name);
         } else {
-          if (paused) {
-            buffer.push(entry.name);
-          } else {
-            s.emit('data', entry.name);
-          }
+          s.emit('data', entry.name);
         }
 
         next();
