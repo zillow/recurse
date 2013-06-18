@@ -17,9 +17,7 @@ test('backpressure', function (t) {
   function throttle() {
     pauses++;
     backpressure.pause();
-    setTimeout(function () {
-      backpressure.resume();
-    }, 10);
+    process.nextTick(backpressure.resume);
   }
 
   var backpressure = recurse('backpressure');
