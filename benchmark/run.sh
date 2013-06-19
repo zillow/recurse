@@ -15,3 +15,4 @@ bench wrench
 bench walk
 bench dive
 bench ls-r
+bench match-files
