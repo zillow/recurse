@@ -11,11 +11,36 @@ To benchmark various implementations on all files in your home directory:
     npm install
     ./run.sh
 
+Results
+-------
+
 Untested modules
 ----------------
 
-The following modules was not tested since they do not handle broken
-symlinks (which my home directory has lots of):
-
 * file
+* node-dir
+* walkr
+* read-dir-files
 * final-fs
+* scandir
+* recur-fs
+* cordell
+* recursive-fs
+* Travis
+* finder
+* fsx
+* fs.walker
+* rat
+* esfs
+* recursive-readdir
+* unravel
+* file-finder
+* directory-stream
+* dank-fileemitter
+* dir-mapper
+* dirreader
+* node-dirutils
+* readdirtree
+* node-find-files
+* recdirreader
+* stream-dir
