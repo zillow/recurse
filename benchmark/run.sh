@@ -13,3 +13,4 @@ bench recurse
 bench readdirp
 bench wrench
 bench walk
+bench dive
