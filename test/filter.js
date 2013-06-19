@@ -4,43 +4,43 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var rimraf = require('rimraf');
 
-function createFixtures() {
-  mkdirp.sync('filter/sub');
-  mkdirp.sync('filter/sub2');
-  fs.openSync('filter/1.txt', 'w');
-  fs.openSync('filter/2.tar.gz', 'w');
-  fs.openSync('filter/sub/3.txt', 'w');
-  fs.openSync('filter/sub2/4.jpg', 'w');
+function createFixtures(prefix) {
+  mkdirp.sync(prefix + '-filter/sub');
+  mkdirp.sync(prefix + '-filter/sub2');
+  fs.openSync(prefix + '-filter/1.txt', 'w');
+  fs.openSync(prefix + '-filter/2.tar.gz', 'w');
+  fs.openSync(prefix + '-filter/sub/3.txt', 'w');
+  fs.openSync(prefix + '-filter/sub2/4.jpg', 'w');
 }
 
 test('relname filter', function (t) {
-  createFixtures();
+  createFixtures('relname');
 
   t.plan(2);
 
-  var flat = recurse('filter', function(relname, stat) {
+  var flat = recurse('relname-filter', function(relname, stat) {
     return !stat.isDirectory() && relname.match(/\.txt$/)
   });
   flat.on('data', function(data) {
     t.ok(data.match(/\d\.txt/));
   });
   flat.on('end', function() {
-    rimraf.sync('filter');
+    rimraf.sync('relname-filter');
   });
 });
 
 test('stat filter', function (t) {
-  createFixtures();
+  createFixtures('stat');
 
   t.plan(2);
 
-  var flat = recurse('filter', function(relname, stat) {
+  var flat = recurse('stat-filter', function(relname, stat) {
     return !stat.isDirectory() && relname.match(/\.txt$/)
   });
   flat.on('data', function(data) {
     t.ok(data.match(/\d\.txt/));
   });
   flat.on('end', function() {
-    rimraf.sync('filter');
+    rimraf.sync('stat-filter');
   });
 });
