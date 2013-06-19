@@ -2,14 +2,13 @@
 
 wrapper() {
   res=$(./${1}.js 2>/dev/null)
-  [ $? -ne 0 ] && printf 'failed'
-  printf '%s' "$res"
+  [ $? -ne 0 ] && res=failed
+  [ -n "$res" ] && printf '%-7s' "$res"
   [ -n "$2" ] && printf ' (%s)' "$2"
 }
 
 bench() {
-  printf '%s' $1
-  printf ': '
+  printf '%-14s' "$1:"
   time wrapper $1 "$2"
   printf '\n'
 }
