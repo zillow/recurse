@@ -31,5 +31,5 @@ bench findit 'blows stack easily'
 bench walk
 bench dive 'follows symlinks'
 bench match-files
-bench ls-r
+bench ls-r 'outputs directories'
 bench stream-dir 'does not output symlinks'

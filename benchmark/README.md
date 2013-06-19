@@ -54,7 +54,7 @@ Results
     user	0m1.480s
     sys	0m0.257s
 
-    ls-r:         45169  
+    ls-r:         45169    (outputs directories)
     real	0m3.646s
     user	0m3.783s
     sys	0m0.253s
