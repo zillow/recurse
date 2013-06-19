@@ -32,5 +32,6 @@ bench walk
 bench file
 bench dive 'follows symlinks'
 bench match-files
+bench node-dir
 bench ls-r 'outputs directories'
 bench stream-dir 'does not output symlinks'

@@ -59,6 +59,11 @@ Results
     user	0m1.480s
     sys	0m0.257s
 
+    node-dir:     42425  
+    real	0m0.788s
+    user	0m0.830s
+    sys	0m0.220s
+
     ls-r:         45169    (outputs directories)
     real	0m3.646s
     user	0m3.783s
@@ -72,7 +77,6 @@ Results
 Untested modules
 ----------------
 
-* node-dir
 * walkr
 * read-dir-files
 * final-fs
