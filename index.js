@@ -6,7 +6,12 @@ function notDirectoryFilter(relname, stat) {
   return !stat.isDirectory();
 }
 
-module.exports = function (root, fn) {
+module.exports = function (root, filter) {
+  var queue = [root];
+  var pendingReaddirs = 0;
+  var pendingLstats = 0;
+  var buffer = [];
+
   var s = new Stream;
   s.readable = true
 
@@ -20,12 +25,6 @@ module.exports = function (root, fn) {
     paused = false;
     next();
   }
-
-  var filter = fn || notDirectoryFilter;
-  var queue = [root];
-  var pendingReaddirs = 0;
-  var pendingLstats = 0;
-  var buffer = [];
 
   function recurse(dir) {
     pendingReaddirs++;
@@ -56,11 +55,9 @@ module.exports = function (root, fn) {
           return next();
         }
 
-        if (stats.isDirectory()) {
-          queue.push(relname);
-        }
+        if (stats.isDirectory()) queue.push(relname);
 
-        if (filter(relname, stats)) {
+        if ((filter || notDirectoryFilter)(relname, stats)) {
           if (paused) {
             buffer.push(relname);
           } else {
@@ -82,9 +79,8 @@ module.exports = function (root, fn) {
     }
 
     if (queue.length) return recurse(queue.pop());
-    if (pendingReaddirs || pendingLstats) return;
 
-    s.emit('end');
+    if (!pendingReaddirs && !pendingLstats) s.emit('end');
   }
 
   next();

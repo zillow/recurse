@@ -38,10 +38,10 @@ var recurse = require('recurse');
 
 Return a redable stream of all paths beneath a `root` directory.
 
-### var s = recurse(root, fn)
+### var s = recurse(root, filter)
 
 Return a redable stream of all paths beneath a `root` directory where
-a filter function `fn(relname, stat)` returns true.
+a filter function `filter(relname, stat)` returns true.
 
 Performance
 -----------
