@@ -68,6 +68,12 @@ Results
     user    1m46.240s
     sys     0m5.640s
 
+    stream-dir: 189610
+
+    real    0m29.964s
+    user    0m11.010s
+    sys     0m19.960s
+
 
 
 Untested modules
@@ -99,4 +105,3 @@ Untested modules
 * readdirtree
 * node-find-files
 * recdirreader
-* stream-dir

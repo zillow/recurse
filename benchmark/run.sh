@@ -15,3 +15,4 @@ bench walk
 bench dive
 bench match-files
 bench ls-r
+bench stream-dir
