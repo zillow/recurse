@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 bench() {
   printf '%s: ' $1
   time ./${1}.js
