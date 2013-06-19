@@ -1,6 +1,6 @@
 {
   "name": "recurse",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Takes a root dir and recursively streams paths",
   "main": "index.js",
   "scripts": {
