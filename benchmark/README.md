@@ -34,10 +34,10 @@ Results
     user	0m1.830s
     sys	0m0.277s
 
-    findit:       42424   (blows stack easily)
-    real	0m6.777s
-    user	0m6.647s
-    sys	0m0.450s
+    findit:       42425   (blows stack easily)
+    real	0m6.615s
+    user	0m6.473s
+    sys	0m0.443s
 
     walk:         42424  
     real	0m1.225s
