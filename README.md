@@ -29,8 +29,8 @@ Performance
 -----------
 
 `recurse` is about an order of magniture slower than [GNU find][find]
-after a couple of runs on my home directory. See [the benchmark][] for
-detailed results against other node modules.
+after a couple of runs on my home directory. See [the benchmark][bench]
+fo detailed results against other node modules.
 
 License
 -------
@@ -38,4 +38,4 @@ License
 BSD
 
 [find]: http://www.gnu.org/software/findutils/
-[benchmark]: https://github.com/uggedal/recurse/tree/master/benchmark
+[bench]: https://github.com/uggedal/recurse/tree/master/benchmark
