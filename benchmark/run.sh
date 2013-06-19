@@ -16,7 +16,7 @@ bench() {
 
 bench find
 bench recurse
-bench wrench
+bench wrench 'follows symlinks and outputs directories'
 bench readdirp
 bench findit 'blows stack easily'
 bench walk
