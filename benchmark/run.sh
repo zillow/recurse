@@ -14,7 +14,7 @@ bench wrench
 bench readdirp
 bench findit 'blows stack easily'
 bench walk
-bench dive
+bench dive 'follows symlinks'
 bench match-files
 bench ls-r
 bench stream-dir
