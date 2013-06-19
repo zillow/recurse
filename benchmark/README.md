@@ -39,10 +39,10 @@ Results
     user	0m6.473s
     sys	0m0.443s
 
-    walk:         42424  
-    real	0m1.225s
-    user	0m1.097s
-    sys	0m0.340s
+    walk:         42425  
+    real	0m1.174s
+    user	0m1.047s
+    sys	0m0.330s
 
     dive:         42425   (follows symlinks)
     real	0m0.800s
