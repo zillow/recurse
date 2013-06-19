@@ -59,7 +59,7 @@ Results
     user	0m3.783s
     sys	0m0.253s
 
-    stream-dir:   42424  
+    stream-dir:   42424   (does not output symlinks)
     real	0m1.561s
     user	0m1.363s
     sys	0m0.413s

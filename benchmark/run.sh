@@ -32,4 +32,4 @@ bench walk
 bench dive 'follows symlinks'
 bench match-files
 bench ls-r
-bench stream-dir
+bench stream-dir 'does not output symlinks'
