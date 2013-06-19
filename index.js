@@ -57,11 +57,7 @@ module.exports = function (root, filter) {
         if (stats.isDirectory()) queue.push(relname);
 
         if ((filter || notDirectoryFilter)(relname, stats)) {
-          if (paused) {
-            buffer.push(relname);
-          } else {
-            s.emit('data', relname);
-          }
+          buffer.push(relname);
         }
 
         next();
