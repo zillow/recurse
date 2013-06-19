@@ -25,7 +25,7 @@ fixture
 
 bench find
 bench recurse
-bench wrench 'follows symlinks and outputs directories'
+bench wrench 'dereferences symlinks and outputs directories'
 bench readdirp
 bench findit 'blows stack easily'
 bench walk

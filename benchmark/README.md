@@ -24,7 +24,7 @@ Results
     user	0m0.820s
     sys	0m0.200s
 
-    wrench:       45168   (follows symlinks and outputs directories)
+    wrench:       45168   (dereferences symlinks and outputs directories)
     real	0m1.414s
     user	0m1.580s
     sys	0m0.320s
