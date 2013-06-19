@@ -3,7 +3,7 @@
 var walk = require('walk').walk;
 
 var files = 0;
-var walker = walk(process.env.HOME);
+var walker = walk(process.env.HOME, {followLinks: false});
 
 walker.on("file", function (root, fileStats, next) {
   files++;
