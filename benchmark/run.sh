@@ -1,10 +1,16 @@
 #!/bin/sh
 
+wrapper() {
+  res=$(./${1}.js 2>/dev/null)
+  [ $? -ne 0 ] && printf 'failed'
+  printf '%s' "$res"
+  [ -n "$2" ] && printf ' (%s)' "$2"
+}
+
 bench() {
   printf '%s' $1
-  [ $# -eq 2 ] && printf ' (%s)' "$2"
   printf ': '
-  time ./${1}.js 2>/dev/null
+  time wrapper $1 "$2"
   printf '\n'
 }
 
