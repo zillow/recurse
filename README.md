@@ -30,7 +30,7 @@ Performance
 
 `recurse` is about an order of magniture slower than [GNU find][find]
 after a couple of runs on my home directory. See [the benchmark][bench]
-fo detailed results against other node modules.
+for detailed results against other node modules.
 
 License
 -------
