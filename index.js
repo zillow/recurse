@@ -11,11 +11,10 @@ module.exports = function (root, filter) {
   var pendingReaddirs = 0;
   var pendingLstats = 0;
   var buffer = [];
-
-  var s = new Stream;
-  s.readable = true
-
   var paused = false;
+  var s = new Stream;
+
+  s.readable = true
 
   s.pause = function () {
     paused = true;
