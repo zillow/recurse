@@ -46,7 +46,10 @@ module.exports = function (root) {
       fs.lstat(relName, function (err, stats) {
         pendingLstats--;
 
-        if (err) s.emit('error', err);
+        if (err) {
+          s.emit('error', err);
+          return next();
+        }
 
         if (stats.isDirectory()) {
           queue.push(relName);
