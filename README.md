@@ -11,7 +11,20 @@ Example
 ````javascript
 var recurse = require('recurse');
 
+console.log('all filetypes except directories: ');
 recurse('.').pipe(process.stdout);
+
+
+console.log('js files: ');
+recurse('.', function onlyJs(relname, stat) {
+  return !stat.isDirectory() && relname.match(/\.js$/)
+}).pipe(process.stdout);
+
+
+console.log('dirs: ');
+recurse('.', function onlyDir(relname, stat) {
+  return stat.isDirectory();
+}).pipe(process.stdout);
 ````
 
 Mehods
@@ -21,9 +34,14 @@ Mehods
 var recurse = require('recurse');
 ````
 
-### var s = recurse(dir)
+### var s = recurse(root)
 
-Return a redable stream of all paths beneath a directory.
+Return a redable stream of all paths beneath a `root` directory.
+
+### var s = recurse(root, fn)
+
+Return a redable stream of all paths beneath a `root` directory where
+a filter function `fn(relname, stat)` returns true.
 
 Performance
 -----------

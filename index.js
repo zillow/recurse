@@ -2,7 +2,11 @@ var fs = require('fs');
 var path = require('path');
 var Stream = require('stream');
 
-module.exports = function (root) {
+function notDirectoryFilter(relname, stat) {
+  return !stat.isDirectory();
+}
+
+module.exports = function (root, fn) {
   var s = new Stream;
   s.readable = true
 
@@ -17,6 +21,7 @@ module.exports = function (root) {
     next();
   }
 
+  var filter = fn || notDirectoryFilter;
   var queue = [root];
   var pendingReaddirs = 0;
   var pendingLstats = 0;
@@ -41,9 +46,9 @@ module.exports = function (root) {
 
     pendingLstats += names.length;
     names.forEach(function (name) {
-      var relName = path.join(dir, name);
+      var relname = path.join(dir, name);
 
-      fs.lstat(relName, function (err, stats) {
+      fs.lstat(relname, function (err, stats) {
         pendingLstats--;
 
         if (err) {
@@ -52,11 +57,15 @@ module.exports = function (root) {
         }
 
         if (stats.isDirectory()) {
-          queue.push(relName);
-        } else if (paused) {
-          buffer.push(relName);
-        } else {
-          s.emit('data', relName);
+          queue.push(relname);
+        }
+
+        if (filter(relname, stats)) {
+          if (paused) {
+            buffer.push(relname);
+          } else {
+            s.emit('data', relname);
+          }
         }
 
         next();
