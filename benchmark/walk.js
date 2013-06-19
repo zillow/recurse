@@ -11,5 +11,5 @@ walker.on("file", function (root, fileStats, next) {
 });
 
 walker.on("end", function () {
-  console.log('walk', files);
+  console.log(files);
 });

@@ -2,8 +2,14 @@
 
 set -e
 
-time ./find.js
-time ./recurse.js
-time ./readdirp.js
-time ./wrench.js
-time ./walk.js
+bench() {
+  printf '%s: ' $1
+  time ./${1}.js
+  printf "\n"
+}
+
+bench find
+bench recurse
+bench readdirp
+bench wrench
+bench walk

@@ -7,4 +7,4 @@ var filter = function (chunk) {
   return chunk.stat.isDirectory();
 }
 
-readdirp({ root: process.env.HOME}).pipe(wc('readdirp', filter));
+readdirp({ root: process.env.HOME}).pipe(wc(filter));
