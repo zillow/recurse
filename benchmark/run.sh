@@ -10,10 +10,10 @@ bench() {
 
 bench find
 bench recurse
-bench readdirp
 bench wrench
+bench readdirp
+bench findit
 bench walk
 bench dive
-bench ls-r
 bench match-files
-bench findit
+bench ls-r
