@@ -1,84 +1,89 @@
 var fs = require('fs');
 var path = require('path');
 var Stream = require('stream');
+var util = require('util');
 
 function notDirectoryFilter(relname, stat) {
   return !stat.isDirectory();
 }
 
-module.exports = function (root, filter) {
-  var queue = [root];
-  var pendingReaddirs = 0;
-  var pendingLstats = 0;
-  var buffer = [];
-  var paused = false;
-  var s = new Stream;
+function Recurse(root, filter) {
+  Stream.call(this);
+  this.readable = true;
+  this.paused = false;
 
-  s.readable = true
+  this.queue = [root];
+  this.filter = filter || notDirectoryFilter;
+  this.buffer = [];
+  this.pendingReaddirs = 0;
+  this.pendingLstats = 0;
 
-  s.pause = function () {
-    paused = true;
-  }
+  this.next();
+}
 
-  s.resume = function () {
-    paused = false;
-    next();
-  }
+util.inherits(Recurse, Stream);
 
-  function recurse(dir) {
-    pendingReaddirs++;
-    fs.readdir(dir, function (err, names) {
-      pendingReaddirs--;
+Recurse.prototype.pause = function () {
+  this.paused = true;
+}
 
-      if (err) {
-        s.emit('error', err);
-        return next();
-      }
+Recurse.prototype.resume = function () {
+  this.paused = false;
+  this.next();
+}
 
-      statdir(dir, names);
-    });
-  }
+Recurse.prototype.readdir = function (dir) {
+  this.pendingReaddirs++;
+  fs.readdir(dir, function (err, names) {
+    this.pendingReaddirs--;
 
-  function statdir(dir, names) {
-    if (!names.length) return next();
-
-    pendingLstats += names.length;
-    names.forEach(function (name) {
-      var relname = path.join(dir, name);
-
-      fs.lstat(relname, function (err, stats) {
-        pendingLstats--;
-
-        if (err) {
-          s.emit('error', err);
-          return next();
-        }
-
-        if (stats.isDirectory()) queue.push(relname);
-
-        if ((filter || notDirectoryFilter)(relname, stats)) {
-          buffer.push(relname);
-        }
-
-        next();
-      });
-    });
-  }
-
-  function next() {
-    if (paused) return;
-
-    if (buffer.length) {
-      s.emit('data', buffer.pop());
-      return next();
+    if (err) {
+      this.emit('error', err);
+      return this.next();
     }
 
-    if (queue.length) return recurse(queue.pop());
+    this.statdir(dir, names);
+  }.bind(this));
+}
 
-    if (!pendingReaddirs && !pendingLstats) s.emit('end');
+Recurse.prototype.statdir = function (dir, names) {
+  if (!names.length) return this.next();
+
+  this.pendingLstats += names.length;
+  names.forEach(function (name) {
+    var relname = path.join(dir, name);
+
+    fs.lstat(relname, function (err, stats) {
+      this.pendingLstats--;
+
+      if (err) {
+        this.emit('error', err);
+        return this.next();
+      }
+
+      if (stats.isDirectory()) this.queue.push(relname);
+
+      if (this.filter(relname, stats)) this.buffer.push(relname);
+
+      this.next();
+    }.bind(this));
+  }, this);
+}
+
+Recurse.prototype.next = function () {
+  if (this.paused) return;
+
+  if (this.buffer.length) {
+    this.emit('data', this.buffer.pop());
+    return this.next();
   }
 
-  next();
-
-  return s;
+  if (this.queue.length) return this.readdir(this.queue.pop());
+  if (!this.pendingReaddirs && !this.pendingLstats) this.emit('end');
 }
+
+module.exports = function (root, filter) {
+  return new Recurse(root, filter);
+}
+
+module.exports.Recurse = Recurse;
