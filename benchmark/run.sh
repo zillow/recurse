@@ -16,3 +16,4 @@ bench walk
 bench dive
 bench ls-r
 bench match-files
+bench findit

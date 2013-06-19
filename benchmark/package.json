@@ -12,7 +12,8 @@
     "walk": "2.2.1",
     "dive": "0.3.0",
     "ls-r": "0.2.0",
-    "match-files": "0.1.1"
+    "match-files": "0.1.1",
+    "findit": "0.1.2"
   },
   "author": "Eivind Uggedal <eivind@uggedal.com> (http://uggedal.com/)",
   "license": "BSD"
