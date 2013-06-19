@@ -9,7 +9,7 @@ fixture() {
 }
 
 wrapper() {
-  res=$(./${1}.js $dir 2>/dev/null)
+  res=$(./${1}.js $dir 2>/dev/null | tail -n1)
   [ $? -ne 0 ] && res=failed
   [ -n "$res" ] && printf '%-7s' "$res"
   [ -n "$2" ] && printf ' (%s)' "$2"
@@ -29,6 +29,7 @@ bench wrench 'dereferences symlinks and outputs directories'
 bench readdirp
 bench findit 'blows stack easily'
 bench walk
+bench file
 bench dive 'follows symlinks'
 bench match-files
 bench ls-r 'outputs directories'

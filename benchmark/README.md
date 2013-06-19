@@ -44,6 +44,11 @@ Results
     user	0m1.047s
     sys	0m0.330s
 
+    file:         42425  
+    real	0m0.736s
+    user	0m0.730s
+    sys	0m0.147s
+
     dive:         42425   (follows symlinks)
     real	0m0.800s
     user	0m0.843s
@@ -67,7 +72,6 @@ Results
 Untested modules
 ----------------
 
-* file
 * node-dir
 * walkr
 * read-dir-files
