@@ -4,7 +4,7 @@ var findit = require('findit');
 
 var files = 0;
 
-findit.find(process.env.HOME)
+findit.find(process.argv[2])
 .on('file', function (file, stat) {
   files++;
 }).on('end', function () {

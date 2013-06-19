@@ -3,4 +3,4 @@
 var streamDir = require('stream-dir');
 var wc = require('./wc');
 
-streamDir(process.env.HOME).pipe(wc());
+streamDir(process.argv[2]).pipe(wc());

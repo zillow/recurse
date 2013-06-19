@@ -6,7 +6,7 @@ Highly unscientific benchmarks of various recursive readdir implementations.
 Usage
 -----
 
-To benchmark various implementations on all files in your home directory:
+Benchmark various implementations on 40k+ files in a recent Linux kernel:
 
     npm install
     ./run.sh
@@ -14,67 +14,55 @@ To benchmark various implementations on all files in your home directory:
 Results
 -------
 
-    find: 190301
+    find:         42425  
+    real	0m0.109s
+    user	0m0.063s
+    sys	0m0.050s
 
-    real    0m1.427s
-    user    0m0.440s
-    sys     0m1.040s
+    recurse:      42425  
+    real	0m0.763s
+    user	0m0.820s
+    sys	0m0.200s
 
-    recurse: 190301
+    wrench:       45168   (follows symlinks and outputs directories)
+    real	0m1.414s
+    user	0m1.580s
+    sys	0m0.320s
 
-    real    0m12.108s
-    user    0m12.580s
-    sys     0m5.740s
+    readdirp:     42425  
+    real	0m1.724s
+    user	0m1.830s
+    sys	0m0.277s
 
-    wrench: 230264
+    findit:       42424   (blows stack easily)
+    real	0m6.777s
+    user	0m6.647s
+    sys	0m0.450s
 
-    real    0m16.235s
-    user    0m17.400s
-    sys     0m5.940s
+    walk:         42424  
+    real	0m1.225s
+    user	0m1.097s
+    sys	0m0.340s
 
-    readdirp: 195741
+    dive:         42425   (follows symlinks)
+    real	0m0.800s
+    user	0m0.843s
+    sys	0m0.237s
 
-    real    0m37.525s
-    user    0m40.930s
-    sys     0m10.310s
+    match-files:  42425  
+    real	0m1.450s
+    user	0m1.480s
+    sys	0m0.257s
 
-    findit:
-    ~/dev/recurse/benchmark/node_modules/findit/node_modules/seq/index.js:76
-            f.apply(cb, context.stack);
-              ^
-    RangeError: Maximum call stack size exceeded
+    ls-r:         45169  
+    real	0m3.646s
+    user	0m3.783s
+    sys	0m0.253s
 
-    walk: 189569
-
-    real    0m25.179s
-    user    0m7.430s
-    sys     0m18.760s
-
-    dive: 196076
-
-    real    0m11.768s
-    user    0m12.330s
-    sys     0m5.940s
-
-    match-files: 195741
-
-    real    0m20.893s
-    user    0m21.860s
-    sys     0m5.140s
-
-    ls-r: 224335
-
-    real    1m43.392s
-    user    1m46.240s
-    sys     0m5.640s
-
-    stream-dir: 189610
-
-    real    0m29.964s
-    user    0m11.010s
-    sys     0m19.960s
-
-
+    stream-dir:   42424  
+    real	0m1.561s
+    user	0m1.363s
+    sys	0m0.413s
 
 Untested modules
 ----------------
