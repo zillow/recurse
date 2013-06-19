@@ -1,0 +1,17 @@
+{
+  "name": "recurse-benchmark",
+  "version": "0.0.0",
+  "description": "Benchmarks of various recursive readdir implementations",
+  "private": "true",
+  "scripts": {
+    "test": "./run.sh"
+  },
+  "dependencies": {
+    "readdirp": "0.2.4",
+    "wrench": "1.5.1",
+    "walk": "2.2.1",
+    "dive": "0.3.0"
+  },
+  "author": "Eivind Uggedal <eivind@uggedal.com> (http://uggedal.com/)",
+  "license": "BSD"
+}
