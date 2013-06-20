@@ -9,13 +9,17 @@ test('flat dir', function (t) {
   fs.openSync('flat/1.txt', 'w');
   fs.openSync('flat/2.txt', 'w');
 
-  t.plan(2);
+  t.plan(3);
+
+  var writes = 0;
 
   var flat = recurse('flat');
   flat.on('data', function(data) {
     t.ok(data.match(/flat\/\d\.txt/));
+    writes++;
   });
   flat.on('end', function() {
+    t.equal(writes, 2);
     rimraf.sync('flat');
   });
 });
