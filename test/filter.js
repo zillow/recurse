@@ -21,14 +21,14 @@ test('filter txts', function (t) {
 
   var writes = 0;
 
-  var flat = recurse(d, function(relname, stat) {
+  var txts = recurse(d, function(relname, stat) {
     return !stat.isDirectory() && relname.match(/\.txt$/);
   });
-  flat.on('data', function(data) {
+  txts.on('data', function(data) {
     t.ok(data.match(/\d\.txt/));
     writes++;
   });
-  flat.on('end', function() {
+  txts.on('end', function() {
     t.equal(writes, 2);
     rimraf.sync(d);
   });
@@ -42,14 +42,14 @@ test('filter dirs', function (t) {
 
   var writes = 0;
 
-  var flat = recurse(d, function(relname, stat) {
+  var dirs = recurse(d, function(relname, stat) {
     return stat.isDirectory();
   });
-  flat.on('data', function(data) {
+  dirs.on('data', function(data) {
     t.ok(data.match(new RegExp('^' + d + '/sub\\d?$')));
     writes++;
   });
-  flat.on('end', function() {
+  dirs.on('end', function() {
     t.equal(writes, 2);
     rimraf.sync(d);
   });
