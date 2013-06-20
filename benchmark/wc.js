@@ -7,12 +7,12 @@ module.exports = function (filter) {
 
   wc.write = function (chunk) {
     if (typeof filter !== 'function' || !filter(chunk)) lines++;
-  }
+  };
 
   wc.end = function (chunk) {
     if (chunk) wc.write(chunk);
 
     console.log(lines);
-  }
+  };
   return wc;
-}
+};
