@@ -33,11 +33,11 @@ test('recursive dirs', function (t) {
   concat.writable = true;
   concat.write = function (data) {
     all.push(data);
-  }
+  };
   concat.end = function () {
     t.equal(all.sort().join('\n'), files.sort().join('\n'));
     rimraf.sync('recursive');
-  }
+  };
 
   recursive.pipe(concat);
 });

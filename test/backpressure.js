@@ -26,12 +26,12 @@ test('backpressure', function (t) {
       resumes++;
     });
     return false;
-  }
+  };
 
   pauser.end = function () {
     t.equal(resumes, n - 1, 'should resume ' + (n - 1) + ' times');
     rimraf.sync('backpressure');
-  }
+  };
 
   recurse('backpressure').pipe(pauser);
 });
