@@ -2,8 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var Stream = require('stream');
 
-
-
 module.exports = function (root, opts) {
   opts = opts || {};
 
