@@ -4,13 +4,25 @@ var recurse = require('./');
 recurse('.').pipe(process.stdout);
 
 // recursively write js files:
-function onlyJs(relname, stat) {
+function js(relname, stat) {
   return !stat.isDirectory() && relname.match(/\.js$/)
 }
-recurse('.', {writefilter: onlyJs}).pipe(process.stdout);
+recurse('.', {writefilter: js}).pipe(process.stdout);
 
 // recursively write dirs:
-function onlyDir(relname, stat) {
+function dir(relname, stat) {
   return stat.isDirectory();
 }
-recurse('.', {writefilter: onlyDir}).pipe(process.stdout);
+recurse('.', {writefilter: dir}).pipe(process.stdout);
+
+// non-recursively write all files:
+function none(relname, stat) {
+  return false;
+}
+recurse('.', {recursefilter: none}).pipe(process.stdout);
+
+// recurse into test/ and write js files :
+function test(relname, stat) {
+  return stat.isDirectory() && ~relname.indexOf('test');
+}
+recurse('.', {recursefilter: test, writefilter: js}).pipe(process.stdout);
