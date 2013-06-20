@@ -7,10 +7,10 @@ module.exports = function (root, opts) {
 
   var recursefilter = opts.recursefilter || function (relname, stat) {
     return stat.isDirectory();
-  }
+  };
   var writefilter = opts.writefilter || function (relname, stat) {
     return !stat.isDirectory();
-  }
+  };
 
   var stat = opts.resolvesymlinks ? fs.stat : fs.lstat;
 
@@ -22,16 +22,16 @@ module.exports = function (root, opts) {
 
   var paused = false;
   var s = new Stream;
-  s.readable = true
+  s.readable = true;
 
   s.pause = function () {
     paused = true;
-  }
+  };
 
   s.resume = function () {
     paused = false;
     next();
-  }
+  };
 
   function recurse(dir) {
     pendingReaddirs++;
@@ -91,4 +91,4 @@ module.exports = function (root, opts) {
   next();
 
   return s;
-}
+};
