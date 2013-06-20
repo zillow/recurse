@@ -33,20 +33,22 @@ Recurse.prototype.resume = function () {
 }
 
 Recurse.prototype.readdir = function (dir) {
+  var self = this;
   this.pendingReaddirs++;
   fs.readdir(dir, function (err, names) {
-    this.pendingReaddirs--;
+    self.pendingReaddirs--;
 
     if (err) {
-      this.emit('error', err);
-      return this.next();
+      self.emit('error', err);
+      return self.next();
     }
 
-    this.statdir(dir, names);
-  }.bind(this));
+    self.statdir(dir, names);
+  });
 }
 
 Recurse.prototype.statdir = function (dir, names) {
+  var self = this;
   if (!names.length) return this.next();
 
   this.pendingLstats += names.length;
@@ -54,20 +56,20 @@ Recurse.prototype.statdir = function (dir, names) {
     var relname = path.join(dir, name);
 
     fs.lstat(relname, function (err, stats) {
-      this.pendingLstats--;
+      self.pendingLstats--;
 
       if (err) {
-        this.emit('error', err);
-        return this.next();
+        self.emit('error', err);
+        return self.next();
       }
 
-      if (stats.isDirectory()) this.queue.push(relname);
+      if (stats.isDirectory()) self.queue.push(relname);
 
-      if (this.filter(relname, stats)) this.buffer.push(relname);
+      if (self.filter(relname, stats)) self.buffer.push(relname);
 
-      this.next();
-    }.bind(this));
-  }, this);
+      self.next();
+    });
+  });
 }
 
 Recurse.prototype.next = function () {
