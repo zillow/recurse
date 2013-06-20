@@ -4,8 +4,8 @@ var dive = require('dive');
 
 var files = 0;
 
-dive(process.argv[2], { all: true }, function(err, file) {
+dive(process.argv[2], { all: true }, function (err, file) {
   if (!err) files++;
-}, function() {
+}, function () {
   console.log(files);
 });
