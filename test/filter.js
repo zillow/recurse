@@ -26,7 +26,7 @@ test('filter write txts', function (t) {
   };
   var txts = recurse(d, {writefilter: txtfilter});
   txts.on('data', function (data) {
-    t.ok(data.match(/\d\.txt/));
+    t.similar(data, /\d\.txt/);
     writes++;
   });
   txts.on('end', function () {
@@ -48,7 +48,7 @@ test('filter write dirs', function (t) {
   };
   var dirs = recurse(d, {writefilter: dirfilter});
   dirs.on('data', function (data) {
-    t.ok(data.match(new RegExp('^' + d + '/sub\\d?$')));
+    t.similar(data, new RegExp('^' + d + '/sub\\d?$'));
     writes++;
   });
   dirs.on('end', function () {
@@ -70,7 +70,7 @@ test('filter nonrecursive', function (t) {
   };
   var nonrecursive = recurse(d, {recursefilter: nonrecursivefilter});
   nonrecursive.on('data', function (data) {
-    t.ok(data.match(new RegExp('^' + d + '/[12]\\.(txt|tar\\.gz)$')));
+    t.similar(data, new RegExp('^' + d + '/[12]\\.(txt|tar\\.gz)$'));
     writes++;
   });
   nonrecursive.on('end', function () {
@@ -92,7 +92,7 @@ test('filter recurse specific dir', function (t) {
   };
   var nonrecursive = recurse(d, {recursefilter: nonrecursivefilter});
   nonrecursive.on('data', function (data) {
-    t.ok(data.match(/[124]\.(txt|tar\.gz|jpg)$/));
+    t.similar(data, /[124]\.(txt|tar\.gz|jpg)$/);
     writes++;
   });
   nonrecursive.on('end', function () {

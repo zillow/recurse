@@ -20,7 +20,7 @@ test('backpressure', function (t) {
   pauser.writable = true;
 
   pauser.write = function (data) {
-    t.ok(data.match(/backpressure\/\d\/\d\.txt/), 'data should match path');
+    t.similar(data, /backpressure\/\d\/\d\.txt/, 'data should match path');
     process.nextTick(function () {
       pauser.emit('drain');
       resumes++;

@@ -15,7 +15,7 @@ test('flat dir', function (t) {
 
   var flat = recurse('flat');
   flat.on('data', function (data) {
-    t.ok(data.match(/flat\/\d\.txt/));
+    t.similar(data, /flat\/\d\.txt/);
     writes++;
   });
   flat.on('end', function () {
