@@ -28,7 +28,7 @@ test('backpressure', function (t) {
     return false;
   }
 
-  pauser.end = function() {
+  pauser.end = function () {
     t.equal(resumes, n - 1, 'should resume ' + (n - 1) + ' times');
     rimraf.sync('backpressure');
   }

@@ -25,11 +25,11 @@ test('filter write txts', function (t) {
     return !stat.isDirectory() && relname.match(/\.txt$/);
   };
   var txts = recurse(d, {writefilter: txtfilter});
-  txts.on('data', function(data) {
+  txts.on('data', function (data) {
     t.ok(data.match(/\d\.txt/));
     writes++;
   });
-  txts.on('end', function() {
+  txts.on('end', function () {
     t.equal(writes, 2);
     rimraf.sync(d);
   });
@@ -43,15 +43,15 @@ test('filter write dirs', function (t) {
 
   var writes = 0;
 
-  var dirfilter = function(relname, stat) {
+  var dirfilter = function (relname, stat) {
     return stat.isDirectory();
   };
   var dirs = recurse(d, {writefilter: dirfilter});
-  dirs.on('data', function(data) {
+  dirs.on('data', function (data) {
     t.ok(data.match(new RegExp('^' + d + '/sub\\d?$')));
     writes++;
   });
-  dirs.on('end', function() {
+  dirs.on('end', function () {
     t.equal(writes, 2);
     rimraf.sync(d);
   });
@@ -65,15 +65,15 @@ test('filter nonrecursive', function (t) {
 
   var writes = 0;
 
-  var nonrecursivefilter = function(relname, stat) {
+  var nonrecursivefilter = function (relname, stat) {
     return false;
   };
   var nonrecursive = recurse(d, {recursefilter: nonrecursivefilter});
-  nonrecursive.on('data', function(data) {
+  nonrecursive.on('data', function (data) {
     t.ok(data.match(new RegExp('^' + d + '/[12]\\.(txt|tar\\.gz)$')));
     writes++;
   });
-  nonrecursive.on('end', function() {
+  nonrecursive.on('end', function () {
     t.equal(writes, 2);
     rimraf.sync(d);
   });
@@ -87,15 +87,15 @@ test('filter recurse specific dir', function (t) {
 
   var writes = 0;
 
-  var nonrecursivefilter = function(relname, stat) {
+  var nonrecursivefilter = function (relname, stat) {
     return stat.isDirectory() && relname.match(/\/sub2$/);
   };
   var nonrecursive = recurse(d, {recursefilter: nonrecursivefilter});
-  nonrecursive.on('data', function(data) {
+  nonrecursive.on('data', function (data) {
     t.ok(data.match(/[124]\.(txt|tar\.gz|jpg)$/));
     writes++;
   });
-  nonrecursive.on('end', function() {
+  nonrecursive.on('end', function () {
     t.equal(writes, 3);
     rimraf.sync(d);
   });

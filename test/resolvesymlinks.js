@@ -21,11 +21,11 @@ test('resolving symlinks', function (t) {
   var writes = 0;
 
   var symlinks = recurse(d + '/links', {resolvesymlinks: true});
-  symlinks.on('data', function(data) {
+  symlinks.on('data', function (data) {
     t.equal(data, d + '/links/link/1.txt');
     writes++;
   });
-  symlinks.on('end', function() {
+  symlinks.on('end', function () {
     t.equal(writes, 1);
     rimraf.sync(d);
   });
@@ -40,11 +40,11 @@ test('listing symlinks', function (t) {
   var writes = 0;
 
   var symlinks = recurse(d + '/links');
-  symlinks.on('data', function(data) {
+  symlinks.on('data', function (data) {
     t.equal(data, d + '/links/link');
     writes++;
   });
-  symlinks.on('end', function() {
+  symlinks.on('end', function () {
     t.equal(writes, 1);
     rimraf.sync(d);
   });
