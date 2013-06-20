@@ -57,6 +57,7 @@ Optionally pass in the following `opts`:
   signature.
 * `opts.recursefilter` - custom function for determining whether to recurse a
   path using a `opts.writefilter(relname, stat)` signature.
+* `opts.resolvesymlinks` - if set to true symbolic links will be resolved
 
 Performance
 -----------
