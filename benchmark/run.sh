@@ -25,12 +25,12 @@ fixture
 
 bench find
 bench recurse
-bench wrench 'dereferences symlinks and outputs directories'
+bench wrench 'resolves symlinks and outputs directories'
 bench readdirp
 bench findit 'blows stack easily'
 bench walk
 bench file
-bench dive 'follows symlinks'
+bench dive 'resolves symlinks'
 bench match-files
 bench node-dir
 bench ls-r 'outputs directories'
