@@ -2,24 +2,26 @@ var fs = require('fs');
 var path = require('path');
 var Stream = require('stream');
 
-function recursefilter(relname, stat) {
-  return stat.isDirectory();
-}
 
-function writefilter(relname, stat) {
-  return !stat.isDirectory();
-}
 
 module.exports = function (root, opts) {
-  var queue = [root];
-  var pendingReaddirs = 0;
-  var pendingLstats = 0;
-  var buffer = [];
-  var paused = false;
-  var s = new Stream;
-
   opts = opts || {};
 
+  var recursefilter = opts.recursefilter || function (relname, stat) {
+    return stat.isDirectory();
+  }
+  var writefilter = opts.writefilter || function (relname, stat) {
+    return !stat.isDirectory();
+  }
+
+  var queue = [root];
+  var buffer = [];
+
+  var pendingReaddirs = 0;
+  var pendingLstats = 0;
+
+  var paused = false;
+  var s = new Stream;
   s.readable = true
 
   s.pause = function () {
@@ -60,11 +62,11 @@ module.exports = function (root, opts) {
           return next();
         }
 
-        if ((opts.recursefilter || recursefilter)(relname, stats)) {
+        if (recursefilter(relname, stats)) {
           queue.push(relname);
         }
 
-        if ((opts.writefilter || writefilter)(relname, stats)) {
+        if (writefilter(relname, stats)) {
           buffer.push(relname);
         }
 
