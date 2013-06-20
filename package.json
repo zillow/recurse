@@ -12,9 +12,13 @@
   },
   "keywords": [
     "recursive",
+    "stream",
+    "readdir",
     "path",
+    "directory",
     "dir",
-    "stream"
+    "file",
+    "filter"
   ],
   "devDependencies": {
     "tap": "~0.4.3",
