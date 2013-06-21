@@ -15,7 +15,7 @@ module.exports = function (paths, prefix, cb) {
     if (p.substr(-1) === path.sep) {
       dirs.push(path.join(prefix, p));
     } else {
-      dirs.push(path.join(prefix, path.dirname(path)));
+      dirs.push(path.join(prefix, path.dirname(p)));
       files.push(path.join(prefix, p));
     }
   });
