@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
+var rimraf = require('rimraf');
 
 // TODO: extract this to a separate module.
 // TODO: pass errors to callback.
@@ -8,7 +9,6 @@ var mkdirp = require('mkdirp');
 module.exports = function (paths, prefix, cb) {
   var dirs = [];
   var files = [];
-  if (!prefix) prefix = '';
 
   paths.forEach(function (p) {
     // TODO: symlink support (-> separator).
@@ -43,4 +43,10 @@ module.exports = function (paths, prefix, cb) {
   function check () {
     if (!pendingDirs && !pendingFiles) cb(null);
   }
+
+  return { rm: function (cb) {
+    rimraf(prefix, function (err) {
+      if (cb) cb(err);
+    });
+  }};
 }
