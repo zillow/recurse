@@ -4,22 +4,23 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var rimraf = require('rimraf');
 
-test('flat dir', function (t) {
-  mkdirp.sync('flat');
-  fs.openSync('flat/1.txt', 'w');
-  fs.openSync('flat/2.txt', 'w');
+// TODO: extract to module:
+var testfs = require('./lib/testfs');
 
+test('flat dir', function (t) {
   t.plan(3);
 
-  var writes = 0;
+  testfs(['1.txt', '2.txt'], 'flat', function (err) {
+    var writes = 0;
 
-  var flat = recurse('flat');
-  flat.on('data', function (data) {
-    t.similar(data, /flat\/\d\.txt/);
-    writes++;
-  });
-  flat.on('end', function () {
-    t.equal(writes, 2);
-    rimraf.sync('flat');
+    var flat = recurse('flat');
+    flat.on('data', function (data) {
+      t.similar(data, /flat\/\d\.txt/);
+      writes++;
+    });
+    flat.on('end', function () {
+      t.equal(writes, 2);
+      rimraf.sync('flat');
+    });
   });
 });
