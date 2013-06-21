@@ -7,7 +7,7 @@ var testfs = require('./lib/testfs');
 test('flat dir', function (t) {
   t.plan(3);
 
-  var fs = testfs(['1.txt', '2.txt'], 'flat', function (err) {
+  var fs = testfs('flat', ['1.txt', '2.txt'], function (err) {
     var writes = 0;
 
     var flat = recurse('flat');

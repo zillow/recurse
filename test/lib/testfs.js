@@ -6,7 +6,7 @@ var rimraf = require('rimraf');
 // TODO: extract this to a separate module.
 // TODO: pass errors to callback.
 
-module.exports = function (paths, prefix, cb) {
+module.exports = function (prefix, paths, cb) {
   var dirs = [];
   var files = [];
 

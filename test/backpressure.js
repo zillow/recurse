@@ -14,7 +14,7 @@ test('backpressure', function (t) {
     files.push(i + '/' + i + '.txt');
   }
 
-  var fs = testfs(files, 'backpressure', function (err) {
+  var fs = testfs('backpressure', files, function (err) {
     var resumes = 0;
 
     var pauser = new Stream;
