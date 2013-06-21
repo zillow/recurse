@@ -20,28 +20,34 @@ module.exports = function (paths, prefix, cb) {
     }
   });
 
-  // TODO: normalize dirs before creating them to save syscalls.
-
   var pendingDirs = dirs.length;
+  var pendingFiles = files.length;
+
+  // TODO: normalize dirs before creating them to save syscalls.
   dirs.forEach(function (dir) {
     mkdirp(dir, function (err) {
       pendingDirs--;
-      check();
+      checkDirs();
     });
   });
 
-  var pendingFiles = files.length;
-  files.forEach(function (file) {
-    fs.open(file, 'w', function (err, fd) {
-      fs.close(fd, function (err) {
-        pendingFiles--;
-        check();
+  function mkfiles () {
+    files.forEach(function (file) {
+      fs.open(file, 'w', function (err, fd) {
+        fs.close(fd, function (err) {
+          pendingFiles--;
+          checkFiles();
+        });
       });
     });
-  });
+  }
 
-  function check () {
-    if (!pendingDirs && !pendingFiles) cb(null);
+  function checkDirs () {
+    if (!pendingDirs) mkfiles();
+  }
+
+  function checkFiles () {
+    if (!pendingFiles) cb(null);
   }
 
   return { rm: function (cb) {
