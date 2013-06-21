@@ -1,37 +1,39 @@
 var recurse = require('../');
 var test = require('tap').test;
-var fs = require('fs');
-var mkdirp = require('mkdirp');
-var rimraf = require('rimraf');
 var Stream = require('stream');
 
-test('backpressure', function (t) {
-  var n = 10;
-  for (var i = 0; i < n; i++) {
-    mkdirp.sync('backpressure/' + i);
-    fs.openSync('backpressure/' + i + '/' + i + '.txt', 'w');
-  }
+// TODO: extract to module:
+var testfs = require('./lib/testfs');
 
+test('backpressure', function (t) {
   t.plan(11);
 
-  var resumes = 0;
+  var n = 10;
+  var files = [];
+  for (var i = 0; i < n; i++) {
+    files.push(i + '/' + i + '.txt');
+  }
 
-  var pauser = new Stream;
-  pauser.writable = true;
+  var fs = testfs(files, 'backpressure', function (err) {
+    var resumes = 0;
 
-  pauser.write = function (data) {
-    t.similar(data, /backpressure\/\d\/\d\.txt/, 'data should match path');
-    process.nextTick(function () {
-      pauser.emit('drain');
-      resumes++;
-    });
-    return false;
-  };
+    var pauser = new Stream;
+    pauser.writable = true;
 
-  pauser.end = function () {
-    t.equal(resumes, n - 1, 'should resume ' + (n - 1) + ' times');
-    rimraf.sync('backpressure');
-  };
+    pauser.write = function (data) {
+      t.similar(data, /backpressure\/\d\/\d\.txt/, 'data should match path');
+      process.nextTick(function () {
+        pauser.emit('drain');
+        resumes++;
+      });
+      return false;
+    };
 
-  recurse('backpressure').pipe(pauser);
+    pauser.end = function () {
+      t.equal(resumes, n - 1, 'should resume ' + (n - 1) + ' times');
+      fs.rm();
+    };
+
+    recurse('backpressure').pipe(pauser);
+  });
 });
