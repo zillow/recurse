@@ -1,7 +1,5 @@
 var recurse = require('../');
 var test = require('tap').test;
-var fs = require('fs');
-var mkdirp = require('mkdirp');
 var rimraf = require('rimraf');
 
 // TODO: extract to module:
