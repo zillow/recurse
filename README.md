@@ -11,20 +11,32 @@ Example
 ````javascript
 var recurse = require('recurse');
 
-console.log('all filetypes except directories: ');
+// recursively write all filetypes except directories:
 recurse('.').pipe(process.stdout);
 
-
-console.log('js files: ');
-recurse('.', function onlyJs(relname, stat) {
+// recursively write js files:
+function js(relname, stat) {
   return !stat.isDirectory() && relname.match(/\.js$/)
-}).pipe(process.stdout);
+}
+recurse('.', {writefilter: js}).pipe(process.stdout);
 
-
-console.log('dirs: ');
-recurse('.', function onlyDir(relname, stat) {
+// recursively write dirs:
+function dir(relname, stat) {
   return stat.isDirectory();
-}).pipe(process.stdout);
+}
+recurse('.', {writefilter: dir}).pipe(process.stdout);
+
+// non-recursively write all files:
+function none(relname, stat) {
+  return false;
+}
+recurse('.', {recursefilter: none}).pipe(process.stdout);
+
+// recurse into test/ and write js files :
+function test(relname, stat) {
+  return stat.isDirectory() && ~relname.indexOf('test');
+}
+recurse('.', {recursefilter: test, writefilter: js}).pipe(process.stdout);
 ````
 
 Mehods
@@ -34,14 +46,17 @@ Mehods
 var recurse = require('recurse');
 ````
 
-### var s = recurse(root)
+### var s = recurse(root, opts={})
 
 Return a redable stream of all paths beneath a `root` directory.
 
-### var s = recurse(root, filter)
+Optionally pass in the following `opts`:
 
-Return a redable stream of all paths beneath a `root` directory where
-a filter function `filter(relname, stat)` returns true.
+* `opts.writefilter` - custom function for determining whether to write a
+  path to the recurse stream using a `opts.writefilter(relname, stat)`
+  signature.
+* `opts.recursefilter` - custom function for determining whether to recurse a
+  path using a `opts.writefilter(relname, stat)` signature.
 
 Performance
 -----------
