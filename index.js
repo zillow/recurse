@@ -14,6 +14,8 @@ module.exports = function (root, opts) {
     return !stat.isDirectory();
   }
 
+  var stat = opts.resolvesymlinks ? fs.stat : fs.lstat;
+
   var queue = [root];
   var buffer = [];
 
@@ -54,7 +56,7 @@ module.exports = function (root, opts) {
     names.forEach(function (name) {
       var relname = path.join(dir, name);
 
-      fs.lstat(relname, function (err, stats) {
+      stat(relname, function (err, stats) {
         pendingLstats--;
 
         if (err) {
