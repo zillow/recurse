@@ -20,18 +20,18 @@ test('backpressure', function (t) {
   pauser.writable = true;
 
   pauser.write = function (data) {
-    t.ok(data.match(/backpressure\/\d\/\d\.txt/), 'data should match path');
+    t.similar(data, /backpressure\/\d\/\d\.txt/, 'data should match path');
     process.nextTick(function () {
       pauser.emit('drain');
       resumes++;
     });
     return false;
-  }
+  };
 
-  pauser.end = function() {
+  pauser.end = function () {
     t.equal(resumes, n - 1, 'should resume ' + (n - 1) + ' times');
     rimraf.sync('backpressure');
-  }
+  };
 
   recurse('backpressure').pipe(pauser);
 });

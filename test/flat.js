@@ -14,11 +14,11 @@ test('flat dir', function (t) {
   var writes = 0;
 
   var flat = recurse('flat');
-  flat.on('data', function(data) {
-    t.ok(data.match(/flat\/\d\.txt/));
+  flat.on('data', function (data) {
+    t.similar(data, /flat\/\d\.txt/);
     writes++;
   });
-  flat.on('end', function() {
+  flat.on('end', function () {
     t.equal(writes, 2);
     rimraf.sync('flat');
   });

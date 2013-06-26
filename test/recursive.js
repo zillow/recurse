@@ -20,7 +20,7 @@ test('recursive dirs', function (t) {
   mkdirp.sync('recursive/sub/subsub/empty');
   mkdirp.sync('recursive/sub2');
 
-  files.forEach(function(f) {
+  files.forEach(function (f) {
     fs.openSync(f, 'w');
   });
 
@@ -31,13 +31,13 @@ test('recursive dirs', function (t) {
   var all = [];
   var concat = new Stream;
   concat.writable = true;
-  concat.write = function(data) {
+  concat.write = function (data) {
     all.push(data);
-  }
-  concat.end = function() {
+  };
+  concat.end = function () {
     t.equal(all.sort().join('\n'), files.sort().join('\n'));
     rimraf.sync('recursive');
-  }
+  };
 
   recursive.pipe(concat);
 });

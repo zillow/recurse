@@ -24,7 +24,7 @@ Results
     user	0m0.820s
     sys	0m0.200s
 
-    wrench:       45168   (dereferences symlinks and outputs directories)
+    wrench:       45168   (resolves symlinks and outputs directories)
     real	0m1.414s
     user	0m1.580s
     sys	0m0.320s
@@ -49,7 +49,7 @@ Results
     user	0m0.730s
     sys	0m0.147s
 
-    dive:         42425   (follows symlinks)
+    dive:         42425   (resolves symlinks)
     real	0m0.800s
     user	0m0.843s
     sys	0m0.237s
