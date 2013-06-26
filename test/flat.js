@@ -1,8 +1,6 @@
 var recurse = require('../');
 var test = require('tap').test;
-
-// TODO: extract to module:
-var testfs = require('./lib/testfs');
+var testfs = require('testfs');
 
 test('flat dir', function (t) {
   t.plan(3);

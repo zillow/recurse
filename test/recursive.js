@@ -2,9 +2,7 @@ var recurse = require('../');
 var test = require('tap').test;
 var Stream = require('stream');
 var path = require('path');
-
-// TODO: extract to module:
-var testfs = require('./lib/testfs');
+var testfs = require('testfs');
 
 test('recursive dirs', function (t) {
   t.plan(1);

@@ -1,9 +1,7 @@
 var recurse = require('../');
 var test = require('tap').test;
 var Stream = require('stream');
-
-// TODO: extract to module:
-var testfs = require('./lib/testfs');
+var testfs = require('testfs');
 
 test('backpressure', function (t) {
   t.plan(11);

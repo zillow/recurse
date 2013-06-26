@@ -22,8 +22,8 @@
   ],
   "devDependencies": {
     "tap": "~0.4.3",
-    "mkdirp": "~0.3.5",
-    "rimraf": "~2.2.0"
+    "rimraf": "~2.2.0",
+    "testfs": "~0.0.0"
   },
   "author": "Eivind Uggedal <eivind@uggedal.com> (http://uggedal.com/)",
   "license": "BSD",
