@@ -1,25 +1,21 @@
 var recurse = require('../');
 var test = require('tap').test;
-var fs = require('fs');
-var mkdirp = require('mkdirp');
-var rimraf = require('rimraf');
+var testfs = require('testfs');
 
 test('flat dir', function (t) {
-  mkdirp.sync('flat');
-  fs.openSync('flat/1.txt', 'w');
-  fs.openSync('flat/2.txt', 'w');
-
   t.plan(3);
 
-  var writes = 0;
+  var fs = testfs('flat', ['1.txt', '2.txt'], function (err) {
+    var writes = 0;
 
-  var flat = recurse('flat');
-  flat.on('data', function (data) {
-    t.similar(data, /flat\/\d\.txt/);
-    writes++;
-  });
-  flat.on('end', function () {
-    t.equal(writes, 2);
-    rimraf.sync('flat');
+    var flat = recurse('flat');
+    flat.on('data', function (data) {
+      t.similar(data, /flat\/\d\.txt/);
+      writes++;
+    });
+    flat.on('end', function () {
+      t.equal(writes, 2);
+      fs.rm();
+    });
   });
 });
