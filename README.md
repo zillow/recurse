@@ -69,7 +69,7 @@ for detailed results against other node modules.
 License
 -------
 
-BSD
+MIT
 
 [find]: http://www.gnu.org/software/findutils/
 [bench]: https://github.com/uggedal/recurse/tree/master/benchmark

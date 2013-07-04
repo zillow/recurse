@@ -25,7 +25,7 @@
     "testfs": "~0.1.0"
   },
   "author": "Eivind Uggedal <eivind@uggedal.com> (http://uggedal.com/)",
-  "license": "BSD",
+  "license": "MIT",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/uggedal/recurse/issues"
