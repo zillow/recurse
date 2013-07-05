@@ -62,7 +62,7 @@ Optionally pass in the following `opts`:
 Performance
 -----------
 
-`recurse` is about an order of magniture slower than [GNU find][find]
+`recurse` is about an order of magnitude slower than [GNU find][find]
 after a couple of runs on my home directory. See [the benchmark][bench]
 for detailed results against other node modules.
 
