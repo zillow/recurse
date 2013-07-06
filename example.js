@@ -21,7 +21,7 @@ function none(relname, stat) {
 }
 recurse('.', {recursefilter: none}).pipe(process.stdout);
 
-// recurse into test/ and write js files :
+// recurse into test/ and write js files:
 function test(relname, stat) {
   return stat.isDirectory() && ~relname.indexOf('test');
 }
