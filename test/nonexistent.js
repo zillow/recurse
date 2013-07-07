@@ -9,4 +9,6 @@ test('nonexiseant dir', function (t) {
   nonexistent.on('error', function (err) {
     t.equal(err.code, 'ENOENT');
   });
+
+  nonexistent.read();
 });

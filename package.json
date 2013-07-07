@@ -2,6 +2,9 @@
   "name": "recurse",
   "version": "2.1.2",
   "description": "Takes a root dir and recursively streams paths",
+  "engines": {
+    "node": ">=0.8.0"
+  },
   "main": "index.js",
   "scripts": {
     "test": "tap test/*.js"
@@ -20,6 +23,9 @@
     "file",
     "filter"
   ],
+  "dependencies": {
+    "readable-stream": "~1.0.2"
+  },
   "devDependencies": {
     "tap": "~0.4.3",
     "testfs": "~0.1.0"
