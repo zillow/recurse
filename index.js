@@ -32,7 +32,7 @@ Recurse.prototype.readdir = function (dir) {
 
   self.pending++;
   fs.readdir(dir, function (err, names) {
-    self.pending--
+    self.pending--;
 
     if (err) {
       self.emit('error', err);
@@ -79,4 +79,4 @@ Recurse.prototype._read = function () {
 
 module.exports = function (root, opts) {
   return new Recurse(root, opts);
-}
+};
