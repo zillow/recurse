@@ -73,14 +73,12 @@ Recurse.prototype.statdir = function (dir, names) {
 };
 
 Recurse.prototype._read = function () {
-  var self = this;
+  while (this.buffer.length)
+    if (!this.push(this.buffer.pop())) return;
 
-  while (self.buffer.length)
-    if (!self.push(self.buffer.pop())) return;
+  if (this.queue.length) this.readdir(this.queue.pop());
 
-  if (self.queue.length) self.readdir(self.queue.pop());
-
-  if (!self.pending) self.push(null);
+  if (!this.pending) this.push(null);
 };
 
 module.exports = function (root, opts) {
