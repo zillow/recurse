@@ -8,7 +8,7 @@ var files = [
   '/2.tar.gz',
   '/sub/3.txt',
   '/sub2/4.jpg'
-]
+];
 
 test('filter write txts', function (t) {
   var d = 'filter-write-txts';
