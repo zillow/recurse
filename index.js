@@ -54,18 +54,14 @@ Recurse.prototype.statdir = function (dir, names) {
 
     self.stat(relname, function (err, stats) {
       self.pending--;
+
       if (err) {
         self.emit('error', err);
         return self._read();
       }
 
-      if (self.recursefilter(relname, stats)) {
-        self.queue.push(relname);
-      }
-
-      if (self.writefilter(relname, stats)) {
-        self.buffer.push(relname);
-      }
+      if (self.recursefilter(relname, stats)) self.queue.push(relname);
+      if (self.writefilter(relname, stats)) self.buffer.push(relname);
 
       self._read();
     });
