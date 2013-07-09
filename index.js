@@ -8,7 +8,7 @@ if (!Readable) Readable = require('readable-stream').Readable;
 function Recurse (root, opts) {
   Readable.call(this, {objectMode: true});
 
-  var opts = opts || {};
+  opts = opts || {};
 
   this.recursefilter = opts.recursefilter || function (relname, stat) {
     return stat.isDirectory();
