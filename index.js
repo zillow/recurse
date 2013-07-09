@@ -39,14 +39,14 @@ Recurse.prototype.readdir = function (dir) {
       return self._read();
     }
 
+    if (!names.length) return self._read();
+
     self.statdir(dir, names);
   });
 };
 
 Recurse.prototype.statdir = function (dir, names) {
   var self = this;
-
-  if (!names.length) return self._read();
 
   self.pending += names.length;
   names.forEach(function (name) {
