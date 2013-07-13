@@ -9,9 +9,12 @@ test('flat dir', function (t) {
     var writes = 0;
 
     var flat = recurse('flat');
-    flat.on('data', function (data) {
-      t.similar(data, /flat\/\d\.txt/);
-      writes++;
+    flat.on('readable', function () {
+      var data = flat.read();
+      if (data) {
+        t.similar(data, /flat\/\d\.txt/);
+        writes++;
+      }
     });
     flat.on('end', function () {
       t.equal(writes, 2);
