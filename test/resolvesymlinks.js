@@ -16,9 +16,12 @@ test('resolving symlinks', function (t) {
     var writes = 0;
 
     var symlinks = recurse(d + '/links', {resolvesymlinks: true});
-    symlinks.on('data', function (data) {
-      t.equal(data, d + '/links/link/1.txt');
-      writes++;
+    symlinks.on('readable', function () {
+      var data = symlinks.read();
+      if (data) {
+        t.equal(data, d + '/links/link/1.txt');
+        writes++;
+      }
     });
     symlinks.on('end', function () {
       t.equal(writes, 1);
@@ -35,9 +38,12 @@ test('listing symlinks', function (t) {
     var writes = 0;
 
     var symlinks = recurse(d + '/links');
-    symlinks.on('data', function (data) {
-      t.equal(data, d + '/links/link');
-      writes++;
+    symlinks.on('readable', function () {
+      var data = symlinks.read();
+      if (data) {
+        t.equal(data, d + '/links/link');
+        writes++;
+      }
     });
     symlinks.on('end', function () {
       t.equal(writes, 1);
