@@ -1,6 +1,6 @@
 var recurse = require('../');
 var test = require('tap').test;
-var Stream = require('stream');
+var Writable = require('stream').Writable;
 var path = require('path');
 var testfs = require('testfs');
 
@@ -26,12 +26,12 @@ test('recursive dirs', function (t) {
     var recursive = recurse('recursive');
 
     var all = [];
-    var concat = new Stream;
-    concat.writable = true;
-    concat.write = function (data) {
-      all.push(data);
+    var concat = new Writable;
+    concat._write = function (chunk, enc, next) {
+      all.push(chunk);
+      next();
     };
-    concat.end = function () {
+    concat.on('finish',  function () {
       t.equal(
         all.sort().join('\n'),
         files.map(function (name) {
@@ -39,7 +39,7 @@ test('recursive dirs', function (t) {
         }).sort().join('\n')
       );
       fs.rm();
-    };
+    });
 
     recursive.pipe(concat);
   });
