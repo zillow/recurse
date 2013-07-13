@@ -21,9 +21,12 @@ test('filter write txts', function (t) {
       return !stat.isDirectory() && relname.match(/\.txt$/);
     };
     var txts = recurse(d, {writefilter: txtfilter});
-    txts.on('data', function (data) {
-      t.similar(data, /\d\.txt/);
-      writes++;
+    txts.on('readable', function () {
+      var data = txts.read();
+      if (data) {
+        t.similar(data, /\d\.txt/);
+        writes++;
+      }
     });
     txts.on('end', function () {
       t.equal(writes, 2);
@@ -43,9 +46,12 @@ test('filter write dirs', function (t) {
       return stat.isDirectory();
     };
     var dirs = recurse(d, {writefilter: dirfilter});
-    dirs.on('data', function (data) {
-      t.similar(data, new RegExp('^' + d + '/sub\\d?$'));
-      writes++;
+    dirs.on('readable', function () {
+      var data = dirs.read();
+      if (data) {
+        t.similar(data, new RegExp('^' + d + '/sub\\d?$'));
+        writes++;
+      }
     });
     dirs.on('end', function () {
       t.equal(writes, 2);
@@ -65,9 +71,12 @@ test('filter nonrecursive', function (t) {
       return false;
     };
     var nonrecursive = recurse(d, {recursefilter: nonrecursivefilter});
-    nonrecursive.on('data', function (data) {
-      t.similar(data, new RegExp('^' + d + '/[12]\\.(txt|tar\\.gz)$'));
-      writes++;
+    nonrecursive.on('readable', function () {
+      var data = nonrecursive.read();
+      if (data) {
+        t.similar(data, new RegExp('^' + d + '/[12]\\.(txt|tar\\.gz)$'));
+        writes++;
+      }
     });
     nonrecursive.on('end', function () {
       t.equal(writes, 2);
@@ -83,15 +92,18 @@ test('filter recurse specific dir', function (t) {
   var fs = testfs(d, files, function (err) {
     var writes = 0;
 
-    var nonrecursivefilter = function (relname, stat) {
+    var recursespecificfilter = function (relname, stat) {
       return stat.isDirectory() && relname.match(/\/sub2$/);
     };
-    var nonrecursive = recurse(d, {recursefilter: nonrecursivefilter});
-    nonrecursive.on('data', function (data) {
-      t.similar(data, /[124]\.(txt|tar\.gz|jpg)$/);
-      writes++;
+    var recursespecific = recurse(d, {recursefilter: recursespecificfilter});
+    recursespecific.on('readable', function () {
+      var data = recursespecific.read();
+      if (data) {
+        t.similar(data, /[124]\.(txt|tar\.gz|jpg)$/);
+        writes++;
+      }
     });
-    nonrecursive.on('end', function () {
+    recursespecific.on('end', function () {
       t.equal(writes, 3);
       fs.rm();
     });
