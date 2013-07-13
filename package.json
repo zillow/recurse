@@ -1,6 +1,6 @@
 {
   "name": "recurse",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "Takes a root dir and recursively streams paths",
   "engines": {
     "node": ">=0.8.0"
