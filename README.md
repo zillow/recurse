@@ -7,6 +7,8 @@ Takes a root dir and recursively streams paths.
 
 [![dependency status](https://david-dm.org/uggedal/recurse.png)](https://david-dm.org/uggedal/recurse)
 
+[![npm](https://nodei.co/npm/recurse.png)](https://npmjs.org/package/recurse)
+
 Example
 -------
 
