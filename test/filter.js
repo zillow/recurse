@@ -14,7 +14,7 @@ test('filter write txts', function (t) {
   var d = 'filter-write-txts';
   t.plan(3);
 
-  var fs = testfs(d, files, function (err) {
+  testfs(d, files, function (err, rm) {
     var writes = 0;
 
     var txtfilter = function (relname, stat) {
@@ -30,7 +30,7 @@ test('filter write txts', function (t) {
     });
     txts.on('end', function () {
       t.equal(writes, 2);
-      fs.rm();
+      rm();
     });
   });
 });
@@ -39,7 +39,7 @@ test('filter write dirs', function (t) {
   var d = 'filter-write-dirs';
   t.plan(3);
 
-  var fs = testfs(d, files, function (err) {
+  testfs(d, files, function (err, rm) {
     var writes = 0;
 
     var dirfilter = function (relname, stat) {
@@ -55,7 +55,7 @@ test('filter write dirs', function (t) {
     });
     dirs.on('end', function () {
       t.equal(writes, 2);
-      fs.rm();
+      rm();
     });
   });
 });
@@ -64,7 +64,7 @@ test('filter nonrecursive', function (t) {
   var d = 'filter-nonrecursive';
   t.plan(3);
 
-  var fs = testfs(d, files, function (err) {
+  testfs(d, files, function (err, rm) {
     var writes = 0;
 
     var nonrecursivefilter = function (relname, stat) {
@@ -80,7 +80,7 @@ test('filter nonrecursive', function (t) {
     });
     nonrecursive.on('end', function () {
       t.equal(writes, 2);
-      fs.rm();
+      rm();
     });
   });
 });
@@ -89,7 +89,7 @@ test('filter recurse specific dir', function (t) {
   var d = 'filter-recurse-specific-dir';
   t.plan(4);
 
-  var fs = testfs(d, files, function (err) {
+  testfs(d, files, function (err, rm) {
     var writes = 0;
 
     var recursespecificfilter = function (relname, stat) {
@@ -105,7 +105,7 @@ test('filter recurse specific dir', function (t) {
     });
     recursespecific.on('end', function () {
       t.equal(writes, 3);
-      fs.rm();
+      rm();
     });
   });
 });

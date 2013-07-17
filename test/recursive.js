@@ -24,7 +24,7 @@ test('recursive dirs', function (t) {
 
   var prefix = 'recursive';
 
-  var fs = testfs(prefix, paths, function (err) {
+  testfs(prefix, paths, function (err, rm) {
     var recursive = recurse('recursive');
 
     var all = [];
@@ -40,7 +40,7 @@ test('recursive dirs', function (t) {
           return path.join(prefix, name);
         }).sort().join('\n')
       );
-      fs.rm();
+      rm();
     });
 
     recursive.pipe(concat);

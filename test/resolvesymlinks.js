@@ -12,7 +12,7 @@ test('resolving symlinks', function (t) {
   var d = 'resolvesymlinks';
   t.plan(2);
 
-  var fs = testfs(d, files, function (err) {
+  testfs(d, files, function (err, rm) {
     var writes = 0;
 
     var symlinks = recurse(d + '/links', {resolvesymlinks: true});
@@ -25,7 +25,7 @@ test('resolving symlinks', function (t) {
     });
     symlinks.on('end', function () {
       t.equal(writes, 1);
-      fs.rm();
+      rm();
     });
   });
 });
@@ -34,7 +34,7 @@ test('listing symlinks', function (t) {
   var d = 'listymlinks';
   t.plan(2);
 
-  var fs = testfs(d, files, function (err) {
+  testfs(d, files, function (err, rm) {
     var writes = 0;
 
     var symlinks = recurse(d + '/links');
@@ -47,7 +47,7 @@ test('listing symlinks', function (t) {
     });
     symlinks.on('end', function () {
       t.equal(writes, 1);
-      fs.rm();
+      rm();
     });
   });
 });

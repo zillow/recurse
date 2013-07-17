@@ -5,7 +5,7 @@ var testfs = require('testfs');
 test('flat dir', function (t) {
   t.plan(3);
 
-  var fs = testfs('flat', ['1.txt', '2.txt'], function (err) {
+  testfs('flat', ['1.txt', '2.txt'], function (err, rm) {
     var writes = 0;
 
     var flat = recurse('flat');
@@ -18,7 +18,7 @@ test('flat dir', function (t) {
     });
     flat.on('end', function () {
       t.equal(writes, 2);
-      fs.rm();
+      rm();
     });
   });
 });

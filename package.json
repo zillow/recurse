@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "tap": "~0.4.3",
-    "testfs": "~0.1.0"
+    "testfs": "~1.0.0"
   },
   "author": "Eivind Uggedal <eivind@uggedal.com> (http://uggedal.com/)",
   "license": "MIT",
