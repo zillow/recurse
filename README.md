@@ -10,7 +10,7 @@ Takes a root dir and recursively streams paths.
 Example
 -------
 
-````javascript
+```javascript
 var recurse = require('recurse');
 
 // recursively write all filetypes except directories:
@@ -39,14 +39,14 @@ function test(relname, stat) {
   return stat.isDirectory() && ~relname.indexOf('test');
 }
 recurse('.', {recursefilter: test, writefilter: js}).pipe(process.stdout);
-````
+```
 
 Mehods
 ------
 
-````javascript
+```javascript
 var recurse = require('recurse');
-````
+```
 
 ### var s = recurse(root, opts={})
 
