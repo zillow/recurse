@@ -64,8 +64,7 @@ Optionally pass in the following `opts`:
 Compatibility
 -------------
 
-Node 0.8.x will use the `readable-stream` module while node 0.10.x and newer
-will use the core `Readable` stream class.
+`node` 0.10.x and above.
 
 Performance
 -----------

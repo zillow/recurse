@@ -3,8 +3,6 @@ var path = require('path');
 var inherits = require('util').inherits;
 var Readable = require('stream').Readable;
 
-if (!Readable) Readable = require('readable-stream').Readable;
-
 function Recurse (root, opts) {
   Readable.call(this, {objectMode: true});
 
